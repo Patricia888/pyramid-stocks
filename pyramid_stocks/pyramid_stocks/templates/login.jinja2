@@ -1,14 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Stock Portfolio</title>
+{% extends "index.jinja2" %}
 
-    <link rel="stylesheet" href="styles/normalize.css">
-</head>
-<body>
+{% block content %}
 
     <h1>Login:</h1>
     <h3>Or make an account here (register)</h3>
@@ -26,5 +18,4 @@
             <button type="submit">Submit</button>
     </form>
     
-</body>
-</html>
+{% endblock content %}
