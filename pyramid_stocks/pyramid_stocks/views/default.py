@@ -2,31 +2,57 @@ from pyramid.response import Response
 from pyramid.view import view_config
 
 from sqlalchemy.exc import DBAPIError
-
 from ..models import MyModel
 
+from pyramid.httpexceptions import HTTPFound, HTTPNotFound
 
-@view_config(route_name='home', renderer='../templates/index.jinja2')
+
+@view_config(route_name='home',
+renderer='../templates/index.jinja2')
 def home_view(request):
     return{}
 
 
-@view_config(route_name='auth', renderer='../templates/login.jinja2')
+@view_config(route_name='auth',
+renderer='../templates/login.jinja2')
 def get_auth_view(request):
-    return {}
+    if request.method == 'GET':
+        try:
+        # take a look at the data in the GET req
+        # access form data
+            username = request.GET['username']
+            password = request.GET['password']
+            print('User: {}, Pass: {}'.format(username, password))
+
+            return HTTPFound(location=request.route_url('home'))
+
+        except KeyError:
+            return {}
+
+    if request.method == 'POST':
+        username = request.POST['username']
+        email = request.POST['email']
+        password = request.POST['password']
+        print('User: {}, Pass: {}'.format(username, password, email))
+
+    return HTTPNotFound()  # some exception, probs a 404
 
 
-@view_config(route_name='register', renderer='../templates/register.jinja2')
+
+@view_config(route_name='register',
+renderer='../templates/register.jinja2')
 def get_register_view(request):
     return {}
 
 
-@view_config(route_name='stock', renderer='../templates/stock_add.jinja2')
+@view_config(route_name='stock',
+renderer='../templates/stock_add.jinja2')
 def get_stock_view(request):
     return{}
 
 
-@view_config(route_name='portfolio', renderer='../templates/portfolio.jinja2')
+@view_config(route_name='portfolio',
+renderer='../templates/portfolio.jinja2')
 def get_portfolio_view(request):
     return{}
 
