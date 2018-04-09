@@ -11,4 +11,3 @@ def dummy_request():
 def dummy_get_request():
     request = testing.DummyRequest()
     request.method = 'GET'
-    # request = testing.DummyRequest(method='GET')

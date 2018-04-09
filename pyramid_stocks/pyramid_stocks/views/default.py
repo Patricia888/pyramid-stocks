@@ -6,11 +6,37 @@ from ..models import MyModel
 
 from pyramid.httpexceptions import HTTPFound, HTTPNotFound
 
+import requests
+from ..sample_data import MOCK_DATA
+API_URL = 'https://api.iextrading.com/1.0'
+
+
 
 @view_config(route_name='home',
 renderer='../templates/index.jinja2')
 def home_view(request):
     return{}
+
+
+@view_config(route_name='portfolio', renderer='../templates/portfolio.jinja2')
+def portfolio_view(request):
+    """portfolio view"""
+    return {'stocks': MOCK_DATA}
+
+
+@view_config(route_name='detail', renderer='../templates/stock-detail.jinja2')
+def detail_view(request):
+    """single stock detail view"""
+    try:
+        symbol = request.matchdict['symbol']
+    except KeyError:
+        return HTTPNotFound()
+
+    for stock in MOCK_DATA:
+        if stock['symbol'] == symbol:
+            return {'stock': stock}
+
+    return HTTPNotFound()
 
 
 @view_config(route_name='auth',
@@ -35,43 +61,10 @@ def get_auth_view(request):
         password = request.POST['password']
         print('User: {}, Pass: {}'.format(username, password, email))
 
+        return HTTPFound(location=request.route_url('portfolio'))
+
     return HTTPNotFound()  # some exception, probs a 404
 
-
-
-@view_config(route_name='register',
-renderer='../templates/register.jinja2')
-def get_register_view(request):
-    return {}
-
-
-@view_config(route_name='stock',
-renderer='../templates/stock_add.jinja2')
-def get_stock_view(request):
-    if request.method == 'GET':
-        try:
-            symbol = request.GET['symbol']
-        except KeyError:
-            return {}
-
-    response = requests.get(API_URL + '/stock/{}/company'.format(symbol))
-    data = response.json()
-    return {'company': data}
-
-    else:
-        raise HTTPNotFound()
-
-
-@view_config(route_name='portfolio',
-renderer='../templates/portfolio.jinja2')
-def get_portfolio_view(request):
-    return{}
-
-
-@view_config(route_name='portfolio/{symbol}', renderer='../templates/stock_detail.jinja2')
-def get_detail_view(request):
-    symbol = 'test'
-    return{}
 
 # @view_config(route_name='home', renderer='../templates/mytemplate.jinja2')
 # def my_view(request):
