@@ -48,7 +48,18 @@ def get_register_view(request):
 @view_config(route_name='stock',
 renderer='../templates/stock_add.jinja2')
 def get_stock_view(request):
-    return{}
+    if request.method == 'GET':
+        try:
+            symbol = request.GET['symbol']
+        except KeyError:
+            return {}
+
+    response = requests.get(API_URL + '/stock/{}/company'.format(symbol))
+    data = response.json()
+    return {'company': data}
+
+    else:
+        raise HTTPNotFound()
 
 
 @view_config(route_name='portfolio',
