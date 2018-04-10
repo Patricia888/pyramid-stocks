@@ -8,13 +8,29 @@
             <label for="ticker">Stock Ticker</label>
             <input type="text" name="symbol">
             <button type="submit">Search</button>
-            
+
             <button type="submit">Add to Portfolio</button>
+            
     </form>
 
-    {% if company %}
+    <% if company %>
+    <form action ="{{request.route_url('stock')}}">
+        <input type="text" name="companyName" value={{company.companyName}} hidden required readonly >
+        <input type="text" name="symbol" value={{company.symbol}} hidden required readonly >
+        <input type="text" name="exchange" value={{company.exchange}} hidden readonly >
+        <input type="text" name="website" value={{company.website}} hidden readonly >
+        <input type="text" name="CEO" value={{company.CEO}} hidden readonly >
+        <input type="text" name="industry" value={{company.industry}} hidden >
+        <input type="text" name="sector" value={{}} hidden >
+        <input type="text" name="issueType" value={{company.issueType}} hidden >
+        <input type="text" name="description" value={{company.description}} hidden >
+    </form>
 
-    {%  %}
+
+    <div>
+    {% company %}
+    </div>
+    <% endif %>
 
 
 {% endblock content %}
