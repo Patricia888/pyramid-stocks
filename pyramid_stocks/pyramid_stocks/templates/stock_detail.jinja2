@@ -1,14 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Stock Portfolio</title>
+{% extends "index.jinja2" %}
 
-    <link rel="stylesheet" href="styles/normalize.css">
-</head>
-<body>
+{% block content %}
+
     <h1>Info on the Stock of a Company</h1>
 
         <table id="stock-detail-table">
@@ -35,5 +28,4 @@
                 </tr>
               </table>
     
-</body>
-</html>
+{% endblock content %}
