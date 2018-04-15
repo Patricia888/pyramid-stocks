@@ -42,7 +42,7 @@ def detail_view(request):
 
 
 @view_config(route_name='auth',
-    renderer='../templates/login.jinja2')
+    renderer='../templates/auth.jinja2')
 def get_auth_view(request):
     if request.method == 'GET':
         try:
