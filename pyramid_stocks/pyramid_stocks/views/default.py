@@ -1,73 +1,28 @@
-from pyramid.response import Response
+# from pyramid.response import Response
 from pyramid.view import view_config
 
-from sqlalchemy.exc import DBAPIError
-from ..models import MyModel
+# from sqlalchemy.exc import DBAPIError
+# from ..models import MyModel
 
-from pyramid.httpexceptions import HTTPFound, HTTPNotFound, HTTPException, HTTPBadRequest
+from pyramid.httpexceptions import HTTPFound, HTTPNotFound, HTTPException
 
 import requests
 from ..sample_data import MOCK_DATA
 API_URL = 'https://api.iextrading.com/1.0'
 
 
-
 @view_config(route_name='home',
-renderer='../templates/index.jinja2')
+    renderer='../templates/index.jinja2',
+    request_method='GET')
 def home_view(request):
     return{}
 
 
 @view_config(route_name='portfolio',
-    renderer='../templates/portfolio.jinja2',
-    request_method='GET')
+    renderer='../templates/portfolio.jinja2')
 def portfolio_view(request):
     """portfolio view"""
     return {'stocks': MOCK_DATA}
-
-
-# demo
-@view_config(route_name='stock',
-renderer='../templates/stock-add.jinja2')
-def stock_view(request):
-    """stock view"""
-    if request.method == 'POST':
-        fields = ['companyName', 'symbol']
-
-    if not all([field in request.POST for field in fields]):
-        return HTTPBadRequest()
-
-    try:
-        stock = {
-            'companyName': request.POST['companyName'],
-            'symbol': request.POST['symbol'],
-            'exchange': request.POST['exchange'],
-            'website': request.POST['website'],
-            'CEO': request.POST['CEO'],
-            'industry': request.POST['industry'],
-            'sector': request.POST['sector'],
-            'issueType': request.POST['issueType'],
-            'description': request.POST['description']
-        }
-
-    except KeyError:
-        pass
-
-    MOCK_DATA.append(stock)
-    return HTTPFound(request.route_url('portfolio'))
-
-    if request.method == 'GET':
-        try:
-            symbol = request.GET['symbol']
-        except KeyError:
-            return {}
-
-        response = requests.get(API_URL + '/stock/{}/company'.format(symbol))
-        data = response.json()
-        return {'company': data}
-
-    else:
-        raise HTTPNotFound()
 
 
 @view_config(route_name='detail',
@@ -87,7 +42,7 @@ def detail_view(request):
 
 
 @view_config(route_name='auth',
-renderer='../templates/login.jinja2')
+    renderer='../templates/login.jinja2')
 def get_auth_view(request):
     if request.method == 'GET':
         try:
@@ -97,7 +52,7 @@ def get_auth_view(request):
             password = request.GET['password']
             print('User: {}, Pass: {}'.format(username, password))
 
-            return HTTPFound(location=request.route_url('home'))
+            return HTTPFound(location=request.route_url('portfolio'))
 
         except KeyError:
             return {}
@@ -111,6 +66,54 @@ def get_auth_view(request):
         return HTTPFound(location=request.route_url('portfolio'))
 
     return HTTPNotFound()  # some exception, probs a 404
+
+
+# @view_config(route_name='stock',
+# renderer='../templates/stock-add.jinja2')
+# def stock_view(request):
+#     """stock view"""
+#     if request.method == 'POST':
+#         fields = ['companyName', 'symbol']
+
+#     if not all([field in request.POST for field in fields]):
+#         return HTTPBadRequest()
+
+#     try:
+#         stock = {
+#             'companyName': request.POST['companyName'],
+#             'symbol': request.POST['symbol'],
+#             'exchange': request.POST['exchange'],
+#             'website': request.POST['website'],
+#             'CEO': request.POST['CEO'],
+#             'industry': request.POST['industry'],
+#             'sector': request.POST['sector'],
+#             'issueType': request.POST['issueType'],
+#             'description': request.POST['description']
+#         }
+
+#     except KeyError:
+#         pass
+
+#     MOCK_DATA.append(stock)
+#     return HTTPFound(request.route_url('portfolio'))
+
+#     if request.method == 'GET':
+#         try:
+#             symbol = request.GET['symbol']
+#         except KeyError:
+#             return {}
+
+#         response = requests.get(API_URL + '/stock/{}/company'.format(symbol))
+#         data = response.json()
+#         return {'company': data}
+
+#     else:
+#         raise HTTPNotFound()
+
+
+
+
+
 
 
 # @view_config(route_name='home', renderer='../templates/mytemplate.jinja2')
