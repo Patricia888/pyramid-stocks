@@ -6,25 +6,26 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Stock Portfolio</title>
 
-    <link rel="stylesheet" href="styles/normalize.css">
+    <link rel="stylesheet" href="{{request.static_url('stock_portfolio:static/normalize.css')}}">
+    <link rel="stylesheet" href="{{request.static_url('stock_portfolio:static/base.css')}}">
 
 </head>
 <body>
     <nav>
         <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/auth">Auth</a></li>
-            <li><a href="/stock">Stock</a></li>
-            <li><a href="/portfolio">Portfolio</a></li>
+            <li><a href="{{request.route_url('home')}}">Home</a></li>
+            <li><a href="{{request.route_url('auth')}}">Login</a></li>
+            <li><a href="{{request.route_url('portfolio')}}">Portfolio</a></li>
+            <li><a href="{{request.route_url('portfolio')}}">Add</a></li>
         </ul>
     </nav>
     
     <h1>Stock Portfolio</h1>
     <h3>Your Stock Summary:</h3>
 
-    {% block content %}
-        <p>No content</p>
-    {% endblock content %}
+    {% block content%}
+
+    {% endblock content%}
 
 </body>
 </html>
