@@ -1,9 +1,9 @@
 from pyramid.response import Response
 from pyramid.view import view_config
 
-from sqlalchemy.exc import DBAPIError
+# from sqlalchemy.exc import DBAPIError
 
-from ..models import MyModel
+# from ..models import MyModel
 
 
 @view_config(route_name='home', renderer='../templates/index.jinja2')
@@ -16,9 +16,9 @@ def get_auth_view(request):
     return {}
 
 
-@view_config(route_name='register', renderer='../templates/register.jinja2')
-def get_register_view(request):
-    return {}
+# @view_config(route_name='register', renderer='../templates/register.jinja2')
+# def get_register_view(request):
+#     return {}
 
 
 @view_config(route_name='stock', renderer='../templates/stock_add.jinja2')
@@ -31,10 +31,13 @@ def get_portfolio_view(request):
     return{}
 
 
-@view_config(route_name='portfolio/{symbol}', renderer='../templates/stock_detail.jinja2')
-def get_detail_view(request):
-    symbol = 'test'
-    return{}
+# @view_config(route_name='portfolio/{symbol}', renderer='../templates/stock_detail.jinja2')
+# def get_detail_view(request):
+#     symbol = 'test'
+#     return{}
+
+
+
 
 # @view_config(route_name='home', renderer='../templates/mytemplate.jinja2')
 # def my_view(request):
