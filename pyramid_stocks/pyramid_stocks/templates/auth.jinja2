@@ -5,6 +5,7 @@
 <p>Create a new username and password</p>
 
 <form id="registration-form" method="POST" action="{{request.route_url('auth')}}">
+<input type="hidden" name="csrf_token" value="{{request.session.get_csrf_token()}}">
   <label for="username">Username</label>
   <input type="text" name="username">
 
@@ -17,10 +18,13 @@
   <button type="submit">Register</button>
 </form>
 
+
+
 <h1>Login</h1>
 <p>Login to view your portfolio</p>
 
 <form id="login-form" method="GET" action="{{request.route_url('auth')}}">
+<input type="hidden" name="csrf_token" value="{{request.session.get_csrf_token()}}">
   <label for="username">Username</label>
   <input type="text" name="username">
 

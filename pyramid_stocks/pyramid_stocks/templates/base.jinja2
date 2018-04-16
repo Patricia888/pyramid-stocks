@@ -12,8 +12,12 @@
         <ul>
             <li><a href="{{request.route_url('home')}}">Home</a></li>
             <li><a href="{{request.route_url('auth')}}">Login/Register</a></li>
+
+            {% if request.authenticated_userid %}
             <li><a href="{{request.route_url('portfolio')}}">Portfolio</a></li>
             <li><a href="{{request.route_url('stock')}}">Add</a></li>
+            <li><a href="{{request.route_url('logout')}}">Logout</a></li>
+            {% endif %}
         </ul>
     </nav>
     
