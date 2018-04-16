@@ -16,6 +16,8 @@ from ..models import (
     get_tm_session,
     )
 # from ..models import MyModel
+from ..models import Stock
+from ..models import Account
 
 
 def usage(argv):
@@ -36,13 +38,13 @@ def main(argv=sys.argv):
     engine = get_engine(settings)
     Base.metadata.create_all(engine)
 
-    session_factory = get_session_factory(engine)
+    # session_factory = get_session_factory(engine)
 
-    with transaction.manager:
-        dbsession = get_tm_session(session_factory, transaction.manager)
+    # with transaction.manager:
+    #     dbsession = get_tm_session(session_factory, transaction.manager)
 
-        # NOTE: Made significant changes here
-        from ..sample_data import MOCK_ENTRIES
-        for entry in MOCK_ENTRIES:
-            model = Entry(**entry)
-            dbsession.add(model)
+    #     # NOTE: Made significant changes here
+    #     from ..sample_data import MOCK_ENTRIES
+    #     for entry in MOCK_ENTRIES:
+    #         model = Entry(**entry)
+    #         dbsession.add(model)
