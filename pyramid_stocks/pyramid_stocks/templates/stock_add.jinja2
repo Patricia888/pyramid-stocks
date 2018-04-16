@@ -3,6 +3,7 @@
 {% block content %}
 
     <h1>Add a Stock to Your Portfolio:</h1>
+    <p>Search for a stock by ticker symbol to add to your portfolio</p>
     
     <form id="add-form" method="GET" action="{{request.route_url('stock')}}">
     <label for="ticker">Stock Ticker</label>
@@ -12,8 +13,27 @@
 
     {% if company %}
     <div>
-    {{company}}
+    <h3>Result:</h3>
+    <p>Symbol: {{company.symbol}}<br>
+    Company Name: {{company.companyName}}<br>
+    Exchange: {{company.exchange}}<br>
+    Industry: {{company.industry}}<br>
+    Website: {{company.website}}<br>
+    Description: {{company.description}}<br>
+    CEO: {{company.CEO}}<br>
+    Issue Type: {{company.issueType}}<br>
+    Sector: {{company.sector}}</p>
     </div>
+
+    <form id="add-form" method="POST" action="{{request.route_url('stock')}}">
+    <button type="submit" name="symbol" value="{{company.symbol}}">Add to Portfolio</button>
+    </form>
+
+    {% endif%}
+
+    {% if err %}
+    <h3>Result:</h3>
+    <p>{{err}}</p>
     {% endif%}
 
 {% endblock content %}
