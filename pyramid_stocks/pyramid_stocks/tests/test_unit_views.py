@@ -46,3 +46,11 @@ def test_detail_view_invalid_key(dummy_request):
     dummy_request.matchdict['symbo'] = 'ABC'
     response = detail_view(dummy_request)
     assert isinstance(response, HTTPNotFound)
+
+
+def test_default_behavior_of_stock_view_instance(dummy_request):
+    """test stock view instance"""
+    from ..views.default import add_view
+    dummy_request.method = 'GET'
+    response = add_view(dummy_request)
+    assert isinstance(response, dict)
